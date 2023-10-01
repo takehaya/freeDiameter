@@ -42,7 +42,7 @@ PTHREAD_MUTEX_INITIALIZER;
 
 int diameap_get_eap_user(struct eap_user * user, char * username)
 {
-	TRACE_ENTRY("%p %p",user,username);
+	TRACE_DEBUG(INFO, "%s%s %s",DIAMEAP_EXTENSION,user,username,INFO);
 	if (db_conn == NULL)
 	{
 		TRACE_DEBUG(INFO, "%sNot connected to the MySQL Database server.",DIAMEAP_EXTENSION);
@@ -61,7 +61,7 @@ int diameap_get_eap_user(struct eap_user * user, char * username)
 			query,
 			"SELECT id,username,password,eapmethod, vendor FROM users WHERE  users.username='%s' and users.active='Y' ",
 			username);
-
+	TRACE_DEBUG(INFO,"%sshow query:%s",DIAMEAP_EXTENSION,query);
 	CHECK_POSIX(pthread_mutex_lock( &db_cs_mutex ));
 
 	if (mysql_query(db_conn, query))
